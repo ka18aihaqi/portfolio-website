@@ -85,14 +85,12 @@ function AutoScrollExperience() {
     const el = scrollRef.current;
     if (!el) return;
 
-    // Speed: px per frame
     const speed = 0.7;
 
     const step = () => {
       if (!isHovered.current) {
         posRef.current += speed;
 
-        // When we've scrolled one "third" (one set of experiences), reset to start seamlessly
         const oneThird = el.scrollHeight / 3;
         if (posRef.current >= oneThird) {
           posRef.current -= oneThird;
@@ -116,14 +114,12 @@ function AutoScrollExperience() {
 
   const handleMouseLeave = () => {
     isHovered.current = false;
-    // Sync posRef with actual scroll position after manual scroll
     if (scrollRef.current) {
       posRef.current = scrollRef.current.scrollTop;
     }
   };
 
   const handleScroll = () => {
-    // While hovered and user is scrolling manually, keep posRef in sync
     if (isHovered.current && scrollRef.current) {
       posRef.current = scrollRef.current.scrollTop;
     }
@@ -131,20 +127,16 @@ function AutoScrollExperience() {
 
   return (
     <div className="relative">
-      {/* Top fade mask */}
       <div
         className="absolute top-0 left-0 right-0 h-20 z-10 pointer-events-none"
         style={{
-          background:
-            "linear-gradient(to bottom, #FAFAFA 0%, transparent 100%)",
+          background: "linear-gradient(to bottom, #FAFAFA 0%, transparent 100%)",
         }}
       />
-      {/* Bottom fade mask */}
       <div
         className="absolute bottom-0 left-0 right-0 h-20 z-10 pointer-events-none"
         style={{
-          background:
-            "linear-gradient(to top, #FAFAFA 0%, transparent 100%)",
+          background: "linear-gradient(to top, #FAFAFA 0%, transparent 100%)",
         }}
       />
 
@@ -167,42 +159,42 @@ function AutoScrollExperience() {
           {Array.from({ length: 20 })
             .flatMap(() => experiences)
             .map((exp, i) => (
-            <div
-              key={i}
-              className="group bg-white/60 backdrop-blur-md border border-slate-200/60 rounded-[2rem] p-8 md:p-10 shadow-[0_4px_20px_rgb(0,0,0,0.03)] hover:shadow-[0_12px_40px_rgb(0,0,0,0.06)] hover:bg-white transition-all duration-300"
-            >
-              <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
-                <div className="flex items-center gap-4">
-                  <div className="w-14 h-14 rounded-2xl overflow-hidden bg-white border border-slate-100 shadow-sm flex items-center justify-center p-1 flex-shrink-0 group-hover:scale-105 transition-transform duration-300">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                      src={exp.logo}
-                      alt={`${exp.comp} logo`}
-                      className="w-full h-full object-contain rounded-xl"
-                    />
+              <div
+                key={i}
+                className="group bg-white/60 backdrop-blur-md border border-slate-200/60 rounded-[2rem] p-8 md:p-10 shadow-[0_4px_20px_rgb(0,0,0,0.03)] hover:shadow-[0_12px_40px_rgb(0,0,0,0.06)] hover:bg-white transition-all duration-300"
+              >
+                <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
+                  <div className="flex items-center gap-4">
+                    <div className="w-14 h-14 rounded-2xl overflow-hidden bg-white border border-slate-100 shadow-sm flex items-center justify-center p-1 flex-shrink-0 group-hover:scale-105 transition-transform duration-300">
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img
+                        src={exp.logo}
+                        alt={`${exp.comp} logo`}
+                        className="w-full h-full object-contain rounded-xl"
+                      />
+                    </div>
+                    <div>
+                      <h3 className="text-2xl font-bold text-slate-900 group-hover:text-rose-500 transition-colors">
+                        {exp.role}
+                      </h3>
+                      <p className="text-lg text-slate-600 font-medium">{exp.comp}</p>
+                    </div>
                   </div>
-                  <div>
-                    <h3 className="text-2xl font-bold text-slate-900 group-hover:text-rose-500 transition-colors">
-                      {exp.role}
-                    </h3>
-                    <p className="text-lg text-slate-600 font-medium">{exp.comp}</p>
+                  <div className="px-4 py-1.5 bg-slate-100 border border-slate-200 text-slate-600 rounded-full text-xs font-bold font-mono uppercase tracking-wider">
+                    {exp.year}
                   </div>
                 </div>
-                <div className="px-4 py-1.5 bg-slate-100 border border-slate-200 text-slate-600 rounded-full text-xs font-bold font-mono uppercase tracking-wider">
-                  {exp.year}
-                </div>
+                <div className="h-[1px] w-full bg-slate-100 mb-6" />
+                <ul className="space-y-3 text-slate-500 font-medium text-sm md:text-base leading-relaxed">
+                  {exp.points.map((point, index) => (
+                    <li key={index} className="flex items-start gap-3">
+                      <span className="text-rose-400 mt-1.5 flex-shrink-0 text-xs">▹</span>
+                      <span>{point}</span>
+                    </li>
+                  ))}
+                </ul>
               </div>
-              <div className="h-[1px] w-full bg-slate-100 mb-6" />
-              <ul className="space-y-3 text-slate-500 font-medium text-sm md:text-base leading-relaxed">
-                {exp.points.map((point, index) => (
-                  <li key={index} className="flex items-start gap-3">
-                    <span className="text-rose-400 mt-1.5 flex-shrink-0 text-xs">▹</span>
-                    <span>{point}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
+            ))}
         </div>
       </div>
     </div>
@@ -225,7 +217,7 @@ export default function PortfolioPastelOptimized() {
   const [wordIndex, setWordIndex] = useState(0);
   const [time, setTime] = useState("");
   const [particles, setParticles] = useState<
-  { id: number; x: number; y: number; speed: number; size: number }[]
+    { id: number; x: number; y: number; speed: number; size: number }[]
   >([]);
 
   useEffect(() => {
@@ -263,7 +255,8 @@ export default function PortfolioPastelOptimized() {
     };
     generateParticles();
 
-    let animationFrameId;
+    let animationFrameId: number; // TIPE DATA DITAMBAHKAN DI SINI
+    
     const animateParticles = () => {
       setParticles((prevParticles) =>
         prevParticles.map((p) => ({

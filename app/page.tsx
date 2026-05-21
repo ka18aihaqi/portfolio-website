@@ -73,7 +73,6 @@ const experiences = [
   },
 ];
 
-const marqueeExperiences = [...experiences, ...experiences, ...experiences, ...experiences];
 const words = ["ECOSYSTEM.", "EXPERIENCES.", "SOLUTIONS.", "INNOVATION."];
 
 export default function PortfolioPastelOptimized() {
@@ -269,7 +268,8 @@ export default function PortfolioPastelOptimized() {
             transition={{ duration: 0.8, delay: 0.3 }}
             className="text-lg md:text-xl text-slate-500 max-w-2xl leading-relaxed font-medium mt-6"
           >
-            I am Raden Muhammad Kahfi Albaihaqi Suwarto, an analytical and results-oriented professional with a strong foundation in logical problem-solving, system analysis, and process optimization. I specialize in translating complex technical data into actionable business insights and managing critical digital infrastructure.
+            I translate complex logic into seamless operational workflows. 
+            Bridging robust backend security with dynamic frontend reactivity.
           </motion.p>
         </motion.div>
       </section>

@@ -41,44 +41,181 @@ const projects = [
 const marqueeProjects = [...projects, ...projects, ...projects, ...projects];
 
 const experiences = [
-  { 
-    role: "Web Developer", 
-    comp: "PT. Eska Link", 
-    year: "Feb 2026 - Present", 
+  {
+    role: "Web Developer",
+    comp: "PT. Eska Link",
+    year: "Feb 2026 - Present",
     points: [
       "Optimize and ensure the reliability of business-critical Sales Force applications, directly supporting high-traffic, daily corporate sales operations.",
       "Diagnose and resolve complex system disruptions across multiple business modules, minimizing operational downtime and preventing revenue loss.",
-      "Analyze evolving business requirements to strategize and implement system enhancements, improving overall workflow efficiency."
+      "Analyze evolving business requirements to strategize and implement system enhancements, improving overall workflow efficiency.",
     ],
-    logo: "https://ui-avatars.com/api/?name=EL&background=ffe4e6&color=e11d48&rounded=true&bold=true" 
+    logo: "https://ui-avatars.com/api/?name=EL&background=ffe4e6&color=e11d48&rounded=true&bold=true",
   },
-  { 
-    role: "Web Developer / IT Programmer", 
-    comp: "PT. Terakorp Indonesia", 
-    year: "Oct 2025 - Dec 2025", 
+  {
+    role: "Web Developer / IT Programmer",
+    comp: "PT. Terakorp Indonesia",
+    year: "Oct 2025 - Dec 2025",
     points: [
       "Spearheaded feature enhancements within the Hospital Information System (HIS), including advanced data filtering and reporting automation to support management oversight.",
-      "Executed rapid troubleshooting and critical data corrections under pressure, ensuring seamless, uninterrupted daily healthcare operations."
+      "Executed rapid troubleshooting and critical data corrections under pressure, ensuring seamless, uninterrupted daily healthcare operations.",
     ],
-    logo: "https://ui-avatars.com/api/?name=TI&background=e0f2fe&color=0284c7&rounded=true&bold=true" 
+    logo: "https://ui-avatars.com/api/?name=TI&background=e0f2fe&color=0284c7&rounded=true&bold=true",
   },
-  { 
-    role: "Backend Intern", 
-    comp: "Human Centric Engineering", 
-    year: "Feb 2025 - May 2025", 
+  {
+    role: "Backend Intern",
+    comp: "Human Centric Engineering",
+    year: "Feb 2025 - May 2025",
     points: [
-      "Developed backend systems for an academic conference management platform and successfully optimized document archiving workflows."
+      "Developed backend systems for an academic conference management platform and successfully optimized document archiving workflows.",
     ],
-    logo: "https://ui-avatars.com/api/?name=HC&background=dcfce3&color=16a34a&rounded=true&bold=true" 
+    logo: "https://ui-avatars.com/api/?name=HC&background=dcfce3&color=16a34a&rounded=true&bold=true",
   },
 ];
 
 const words = ["ECOSYSTEM.", "EXPERIENCES.", "SOLUTIONS.", "INNOVATION."];
 
+function AutoScrollExperience() {
+  const scrollRef = useRef(null);
+  const isHovered = useRef(false);
+  const animRef = useRef(null);
+  const posRef = useRef(0);
+
+  useEffect(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+
+    // Speed: px per frame
+    const speed = 0.7;
+
+    const step = () => {
+      if (!isHovered.current) {
+        posRef.current += speed;
+
+        // When we've scrolled one "third" (one set of experiences), reset to start seamlessly
+        const oneThird = el.scrollHeight / 3;
+        if (posRef.current >= oneThird) {
+          posRef.current -= oneThird;
+        }
+
+        el.scrollTop = posRef.current;
+      }
+      animRef.current = requestAnimationFrame(step);
+    };
+
+    animRef.current = requestAnimationFrame(step);
+
+    return () => {
+      if (animRef.current) cancelAnimationFrame(animRef.current);
+    };
+  }, []);
+
+  const handleMouseEnter = () => {
+    isHovered.current = true;
+  };
+
+  const handleMouseLeave = () => {
+    isHovered.current = false;
+    // Sync posRef with actual scroll position after manual scroll
+    if (scrollRef.current) {
+      posRef.current = scrollRef.current.scrollTop;
+    }
+  };
+
+  const handleScroll = () => {
+    // While hovered and user is scrolling manually, keep posRef in sync
+    if (isHovered.current && scrollRef.current) {
+      posRef.current = scrollRef.current.scrollTop;
+    }
+  };
+
+  return (
+    <div className="relative">
+      {/* Top fade mask */}
+      <div
+        className="absolute top-0 left-0 right-0 h-20 z-10 pointer-events-none"
+        style={{
+          background:
+            "linear-gradient(to bottom, #FAFAFA 0%, transparent 100%)",
+        }}
+      />
+      {/* Bottom fade mask */}
+      <div
+        className="absolute bottom-0 left-0 right-0 h-20 z-10 pointer-events-none"
+        style={{
+          background:
+            "linear-gradient(to top, #FAFAFA 0%, transparent 100%)",
+        }}
+      />
+
+      <div
+        ref={scrollRef}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+        onScroll={handleScroll}
+        className="h-[520px] overflow-y-auto overflow-x-hidden"
+        style={{
+          scrollbarWidth: "none",
+          msOverflowStyle: "none",
+        }}
+      >
+        <style>{`
+          div::-webkit-scrollbar { display: none; }
+        `}</style>
+
+        <div className="space-y-6 py-4">
+          {Array.from({ length: 20 })
+            .flatMap(() => experiences)
+            .map((exp, i) => (
+            <div
+              key={i}
+              className="group bg-white/60 backdrop-blur-md border border-slate-200/60 rounded-[2rem] p-8 md:p-10 shadow-[0_4px_20px_rgb(0,0,0,0.03)] hover:shadow-[0_12px_40px_rgb(0,0,0,0.06)] hover:bg-white transition-all duration-300"
+            >
+              <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
+                <div className="flex items-center gap-4">
+                  <div className="w-14 h-14 rounded-2xl overflow-hidden bg-white border border-slate-100 shadow-sm flex items-center justify-center p-1 flex-shrink-0 group-hover:scale-105 transition-transform duration-300">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={exp.logo}
+                      alt={`${exp.comp} logo`}
+                      className="w-full h-full object-contain rounded-xl"
+                    />
+                  </div>
+                  <div>
+                    <h3 className="text-2xl font-bold text-slate-900 group-hover:text-rose-500 transition-colors">
+                      {exp.role}
+                    </h3>
+                    <p className="text-lg text-slate-600 font-medium">{exp.comp}</p>
+                  </div>
+                </div>
+                <div className="px-4 py-1.5 bg-slate-100 border border-slate-200 text-slate-600 rounded-full text-xs font-bold font-mono uppercase tracking-wider">
+                  {exp.year}
+                </div>
+              </div>
+              <div className="h-[1px] w-full bg-slate-100 mb-6" />
+              <ul className="space-y-3 text-slate-500 font-medium text-sm md:text-base leading-relaxed">
+                {exp.points.map((point, index) => (
+                  <li key={index} className="flex items-start gap-3">
+                    <span className="text-rose-400 mt-1.5 flex-shrink-0 text-xs">▹</span>
+                    <span>{point}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function PortfolioPastelOptimized() {
   const containerRef = useRef(null);
 
-  const { scrollYProgress } = useScroll({ target: containerRef, offset: ["start start", "end end"] });
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start start", "end end"],
+  });
   const yBg = useTransform(scrollYProgress, [0, 1], ["0%", "40%"]);
   const opacityHero = useTransform(scrollYProgress, [0, 0.2], [1, 0]);
 
@@ -87,7 +224,7 @@ export default function PortfolioPastelOptimized() {
 
   const [wordIndex, setWordIndex] = useState(0);
   const [time, setTime] = useState("");
-  const [particles, setParticles] = useState<{ id: number; x: number; y: number; speed: number; size: number }[]>([]);
+  const [particles, setParticles] = useState([]);
 
   useEffect(() => {
     const wordInterval = setInterval(() => {
@@ -96,10 +233,17 @@ export default function PortfolioPastelOptimized() {
 
     const timeInterval = setInterval(() => {
       const now = new Date();
-      setTime(now.toLocaleTimeString('en-US', { hour12: true, hour: 'numeric', minute: '2-digit', second: '2-digit' }));
+      setTime(
+        now.toLocaleTimeString("en-US", {
+          hour12: true,
+          hour: "numeric",
+          minute: "2-digit",
+          second: "2-digit",
+        })
+      );
     }, 1000);
 
-    const moveCursor = (e: MouseEvent) => {
+    const moveCursor = (e) => {
       cursorX.set(e.clientX - 250);
       cursorY.set(e.clientY - 250);
     };
@@ -108,22 +252,22 @@ export default function PortfolioPastelOptimized() {
     const generateParticles = () => {
       const newParticles = Array.from({ length: 20 }).map((_, i) => ({
         id: i,
-        x: Math.random() * 100, 
-        y: Math.random() * 100, 
-        speed: 0.05 + Math.random() * 0.1, 
-        size: 2 + Math.random() * 4, 
+        x: Math.random() * 100,
+        y: Math.random() * 100,
+        speed: 0.05 + Math.random() * 0.1,
+        size: 2 + Math.random() * 4,
       }));
       setParticles(newParticles);
     };
     generateParticles();
 
-    let animationFrameId: number;
+    let animationFrameId;
     const animateParticles = () => {
       setParticles((prevParticles) =>
         prevParticles.map((p) => ({
           ...p,
-          y: p.y - p.speed < -10 ? 110 : p.y - p.speed, 
-          x: p.x + Math.sin(p.y * 0.05) * 0.02, 
+          y: p.y - p.speed < -10 ? 110 : p.y - p.speed,
+          x: p.x + Math.sin(p.y * 0.05) * 0.02,
         }))
       );
       animationFrameId = requestAnimationFrame(animateParticles);
@@ -189,7 +333,7 @@ export default function PortfolioPastelOptimized() {
       >
         <div className="backdrop-blur-xl bg-white/60 border border-white/80 shadow-[0_8px_30px_rgb(0,0,0,0.04)] rounded-full px-8 py-4 flex items-center justify-between">
           <h1 className="font-bold tracking-tight text-xl text-slate-900">
-            Kahfi<span className="text-rose-400">.</span>
+            Kahfi Albaihaqi<span className="text-rose-400">.</span>
           </h1>
           <div className="hidden md:flex gap-8 text-xs font-bold tracking-widest uppercase text-slate-400">
             <a href="#about" className="hover:text-rose-400 transition-colors">About</a>
@@ -197,7 +341,10 @@ export default function PortfolioPastelOptimized() {
             <a href="#experience" className="hover:text-rose-400 transition-colors">Experience</a>
             <a href="#projects" className="hover:text-rose-400 transition-colors">Work</a>
           </div>
-          <a href="#contact" className="text-xs font-bold text-white bg-slate-900 hover:bg-slate-800 hover:shadow-lg hover:-translate-y-0.5 px-5 py-2.5 rounded-full transition-all">
+          <a
+            href="#contact"
+            className="text-xs font-bold text-white bg-slate-900 hover:bg-slate-800 hover:shadow-lg hover:-translate-y-0.5 px-5 py-2.5 rounded-full transition-all"
+          >
             Let&apos;s Talk
           </a>
         </div>
@@ -205,15 +352,15 @@ export default function PortfolioPastelOptimized() {
 
       {/* HERO & ABOUT SECTION */}
       <section id="about" className="relative min-h-screen flex items-center justify-center pt-20 px-6">
-        <motion.div 
-          style={{ y: yBg }} 
+        <motion.div
+          style={{ y: yBg }}
           className="absolute inset-0 z-0 flex items-center justify-center pointer-events-none"
         >
           <div className="absolute top-1/4 left-1/4 w-[400px] h-[400px] bg-rose-200/50 blur-[100px] rounded-full mix-blend-multiply animate-[pulse_8s_ease-in-out_infinite]" />
           <div className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-sky-200/50 blur-[120px] rounded-full mix-blend-multiply animate-[pulse_10s_ease-in-out_infinite]" />
         </motion.div>
 
-        <motion.div 
+        <motion.div
           style={{ opacity: opacityHero }}
           className="relative z-10 w-full max-w-5xl flex flex-col items-center text-center"
         >
@@ -228,9 +375,7 @@ export default function PortfolioPastelOptimized() {
               Available for work
             </div>
             <div className="w-[1px] h-4 bg-slate-300"></div>
-            <div className="font-mono text-slate-400">
-              {time || "Loading..."} WIB
-            </div>
+            <div className="font-mono text-slate-400">{time || "Loading..."} WIB</div>
           </motion.div>
 
           <div className="overflow-hidden mb-4">
@@ -243,7 +388,7 @@ export default function PortfolioPastelOptimized() {
               ARCHITECTING
             </motion.h1>
           </div>
-          
+
           <div className="flex flex-col md:flex-row items-center justify-center gap-4 mb-8 text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter leading-none h-[1em]">
             <span className="italic font-serif font-light text-slate-400">the</span>{" "}
             <div className="relative w-[300px] md:w-[600px] text-center md:text-left flex items-center justify-center md:justify-start">
@@ -268,8 +413,8 @@ export default function PortfolioPastelOptimized() {
             transition={{ duration: 0.8, delay: 0.3 }}
             className="text-lg md:text-xl text-slate-500 max-w-2xl leading-relaxed font-medium mt-6"
           >
-            I translate complex logic into seamless operational workflows. 
-            Bridging robust backend security with dynamic frontend reactivity.
+            I translate complex logic into seamless operational workflows. Bridging robust backend security with dynamic
+            frontend reactivity.
           </motion.p>
         </motion.div>
       </section>
@@ -283,11 +428,13 @@ export default function PortfolioPastelOptimized() {
             viewport={{ once: true }}
             className="mb-16 text-center"
           >
-            <h2 className="text-4xl md:text-5xl font-black tracking-tight text-slate-900 mb-4">Education & Credentials</h2>
+            <h2 className="text-4xl md:text-5xl font-black tracking-tight text-slate-900 mb-4">
+              Education & Credentials
+            </h2>
             <p className="text-slate-500 text-lg font-medium">The academic foundation behind the logic.</p>
           </motion.div>
 
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -317,10 +464,11 @@ export default function PortfolioPastelOptimized() {
                   Final Project
                 </h4>
                 <p className="text-slate-500 leading-relaxed font-medium">
-                  Developed a Web-Based Inventory Management System with QR Code Integration to optimize asset tracking and reduce manual operational errors.
+                  Developed a Web-Based Inventory Management System with QR Code Integration to optimize asset tracking
+                  and reduce manual operational errors.
                 </p>
               </div>
-              
+
               <div>
                 <h4 className="font-bold text-slate-900 mb-3 text-lg flex items-center gap-2">
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-sky-400" viewBox="0 0 20 20" fill="currentColor">
@@ -330,16 +478,24 @@ export default function PortfolioPastelOptimized() {
                 </h4>
                 <ul className="space-y-3 text-slate-600 font-medium">
                   <li className="flex items-start gap-3">
-                    <span className="w-1.5 h-1.5 rounded-full bg-sky-400 mt-2 flex-shrink-0"></span> 
-                    <span>Google IT Support Professional Certificate <span className="text-slate-400 text-sm">(2022)</span></span>
+                    <span className="w-1.5 h-1.5 rounded-full bg-sky-400 mt-2 flex-shrink-0"></span>
+                    <span>
+                      Google IT Support Professional Certificate{" "}
+                      <span className="text-slate-400 text-sm">(2022)</span>
+                    </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 mt-2 flex-shrink-0"></span> 
-                    <span>Intellectual Property Rights (HKI) - QR Asset System <span className="text-slate-400 text-sm">(2025)</span></span>
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 mt-2 flex-shrink-0"></span>
+                    <span>
+                      Intellectual Property Rights (HKI) - QR Asset System{" "}
+                      <span className="text-slate-400 text-sm">(2025)</span>
+                    </span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <span className="w-1.5 h-1.5 rounded-full bg-violet-400 mt-2 flex-shrink-0"></span> 
-                    <span>English Proficiency Test Certified <span className="text-slate-400 text-sm">(2025)</span></span>
+                    <span className="w-1.5 h-1.5 rounded-full bg-violet-400 mt-2 flex-shrink-0"></span>
+                    <span>
+                      English Proficiency Test Certified <span className="text-slate-400 text-sm">(2025)</span>
+                    </span>
                   </li>
                 </ul>
               </div>
@@ -348,7 +504,7 @@ export default function PortfolioPastelOptimized() {
         </div>
       </section>
 
-      {/* PROFESSIONAL JOURNEY SECTION (VERTICAL) */}
+      {/* PROFESSIONAL JOURNEY SECTION — AUTO-SCROLL */}
       <section id="experience" className="py-24 px-6 border-t border-slate-200/40 relative z-10">
         <div className="max-w-4xl mx-auto">
           <motion.div
@@ -357,47 +513,21 @@ export default function PortfolioPastelOptimized() {
             viewport={{ once: true }}
             className="mb-20 text-center"
           >
-            <h2 className="text-4xl md:text-5xl font-black tracking-tight text-slate-900 mb-4">Professional Journey</h2>
-            <p className="text-slate-500 text-lg font-medium">A timeline of system engineering and technical impact.</p>
+            <h2 className="text-4xl md:text-5xl font-black tracking-tight text-slate-900 mb-4">
+              Professional Journey
+            </h2>
+            <p className="text-slate-500 text-lg font-medium">
+              A timeline of system engineering and technical impact.
+            </p>
           </motion.div>
 
-          <div className="space-y-6">
-            {experiences.map((exp, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: i * 0.1 }}
-                className="group bg-white/60 backdrop-blur-md border border-slate-200/60 rounded-[2rem] p-8 md:p-10 shadow-[0_4px_20px_rgb(0,0,0,0.03)] hover:shadow-[0_12px_40px_rgb(0,0,0,0.06)] hover:bg-white transition-all duration-300"
-              >
-                <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
-                  <div className="flex items-center gap-4">
-                    <div className="w-14 h-14 rounded-2xl overflow-hidden bg-white border border-slate-100 shadow-sm flex items-center justify-center p-1 flex-shrink-0 group-hover:scale-105 transition-transform duration-300">
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img src={exp.logo} alt={`${exp.comp} logo`} className="w-full h-full object-contain rounded-xl" />
-                    </div>
-                    <div>
-                      <h3 className="text-2xl font-bold text-slate-900 group-hover:text-rose-500 transition-colors">{exp.role}</h3>
-                      <p className="text-lg text-slate-600 font-medium">{exp.comp}</p>
-                    </div>
-                  </div>
-                  <div className="px-4 py-1.5 bg-slate-100 border border-slate-200 text-slate-600 rounded-full text-xs font-bold font-mono uppercase tracking-wider">
-                    {exp.year}
-                  </div>
-                </div>
-                <div className="h-[1px] w-full bg-slate-100 mb-6" />
-                <ul className="space-y-3 text-slate-500 font-medium text-sm md:text-base leading-relaxed">
-                  {exp.points.map((point, index) => (
-                    <li key={index} className="flex items-start gap-3">
-                      <span className="text-rose-400 mt-1.5 flex-shrink-0 text-xs">▹</span>
-                      <span>{point}</span>
-                    </li>
-                  ))}
-                </ul>
-              </motion.div>
-            ))}
-          </div>
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+          >
+            <AutoScrollExperience />
+          </motion.div>
         </div>
       </section>
 
@@ -407,46 +537,48 @@ export default function PortfolioPastelOptimized() {
           <h2 className="text-4xl md:text-5xl font-black tracking-tight text-slate-900">Selected Work</h2>
           <p className="text-slate-500 mt-2 font-medium">Engineering impact through code. Hover to pause.</p>
         </div>
-        
+
         <div className="flex w-[200%] md:w-[150%] animate-marquee pb-8">
           {marqueeProjects.map((project, i) => (
-            <div
-              key={i}
-              className="w-[340px] md:w-[440px] flex-shrink-0 mx-4"
-            >
+            <div key={i} className="w-[340px] md:w-[440px] flex-shrink-0 mx-4">
               <div className="group h-full bg-white/60 backdrop-blur-md border border-slate-200/60 rounded-[2rem] p-8 shadow-[0_4px_20px_rgb(0,0,0,0.03)] hover:shadow-[0_12px_40px_rgb(0,0,0,0.08)] hover:bg-white transition-all duration-500 cursor-default flex flex-col justify-between">
-                
-                <div className={`absolute inset-0 bg-gradient-to-br ${project.gradient} opacity-0 group-hover:opacity-40 transition-opacity duration-700 pointer-events-none rounded-[2rem]`} />
-                
+                <div
+                  className={`absolute inset-0 bg-gradient-to-br ${project.gradient} opacity-0 group-hover:opacity-40 transition-opacity duration-700 pointer-events-none rounded-[2rem]`}
+                />
+
                 <div className="relative z-10">
                   <div className="flex justify-between items-start mb-6">
-                    <motion.div 
+                    <motion.div
                       animate={{ scale: [1, 1.05, 1] }}
                       transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay: i * 0.5 }}
                       className={`w-12 h-12 rounded-2xl flex items-center justify-center ${project.iconBg} ${project.iconColor} font-bold text-lg shadow-sm group-hover:shadow-md transition-shadow`}
                     >
                       0{(i % projects.length) + 1}
                     </motion.div>
-                    <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6 text-slate-300 group-hover:text-slate-800 transition-colors -rotate-45 group-hover:rotate-0 duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="w-6 h-6 text-slate-300 group-hover:text-slate-800 transition-colors -rotate-45 group-hover:rotate-0 duration-300"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M14 5l7 7m0 0l-7 7m7-7H3" />
                     </svg>
                   </div>
-                  <h3 className="text-2xl font-bold text-slate-900 tracking-tight mb-3">
-                    {project.title}
-                  </h3>
-                  <p className="text-slate-500 leading-relaxed text-sm font-medium">
-                    {project.desc}
-                  </p>
+                  <h3 className="text-2xl font-bold text-slate-900 tracking-tight mb-3">{project.title}</h3>
+                  <p className="text-slate-500 leading-relaxed text-sm font-medium">{project.desc}</p>
                 </div>
 
                 <div className="relative z-10 flex flex-wrap gap-2 mt-8">
                   {project.tech.map((tech) => (
-                    <span key={tech} className="px-4 py-1.5 rounded-full bg-slate-100 border border-slate-200 text-xs font-bold text-slate-600 shadow-sm">
+                    <span
+                      key={tech}
+                      className="px-4 py-1.5 rounded-full bg-slate-100 border border-slate-200 text-xs font-bold text-slate-600 shadow-sm"
+                    >
                       {tech}
                     </span>
                   ))}
                 </div>
-
               </div>
             </div>
           ))}
@@ -454,10 +586,13 @@ export default function PortfolioPastelOptimized() {
       </section>
 
       {/* CONTACT SECTION */}
-      <section id="contact" className="py-40 px-6 relative overflow-hidden flex flex-col items-center text-center border-t border-slate-200/40">
+      <section
+        id="contact"
+        className="py-40 px-6 relative overflow-hidden flex flex-col items-center text-center border-t border-slate-200/40"
+      >
         <div className="absolute bottom-0 w-[800px] h-[400px] bg-gradient-to-t from-sky-200/60 to-transparent blur-[100px] pointer-events-none" />
-        
-        <motion.h2 
+
+        <motion.h2
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -465,15 +600,16 @@ export default function PortfolioPastelOptimized() {
         >
           LET&apos;S <span className="italic font-serif font-light text-slate-400">talk.</span>
         </motion.h2>
-        
-        <motion.p 
+
+        <motion.p
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ delay: 0.2 }}
           className="text-slate-500 text-lg md:text-xl max-w-xl mb-12 font-medium"
         >
-          Open for engineering roles and collaborations. I&apos;m ready to bring my analytical background to your next big system.
+          Open for engineering roles and collaborations. I&apos;m ready to bring my analytical background to your next
+          big system.
         </motion.p>
 
         <motion.a
@@ -482,14 +618,16 @@ export default function PortfolioPastelOptimized() {
           href="mailto:kahfialbhqi.work@gmail.com"
           className="relative px-8 py-4 bg-slate-900 text-white shadow-xl shadow-slate-900/20 font-bold rounded-full overflow-hidden group"
         >
-          <span className="relative z-10 group-hover:text-slate-900 transition-colors duration-300">kahfialbhqi.work@gmail.com</span>
+          <span className="relative z-10 group-hover:text-slate-900 transition-colors duration-300">
+            kahfialbhqi.work@gmail.com
+          </span>
           <div className="absolute inset-0 bg-white translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out" />
         </motion.a>
       </section>
 
       {/* FOOTER */}
       <footer className="py-8 text-center text-slate-400 font-medium text-sm relative z-10 border-t border-slate-200/40">
-        <p>© {new Date().getFullYear()} Raden Muhammad Kahfi Albaihaqi Suwarto. All rights reserved.</p>
+        <p>© {new Date().getFullYear()} Kahfi Albaihaqi. All rights reserved.</p>
       </footer>
     </div>
   );

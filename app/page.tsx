@@ -76,9 +76,9 @@ const experiences = [
 const words = ["ECOSYSTEM.", "EXPERIENCES.", "SOLUTIONS.", "INNOVATION."];
 
 function AutoScrollExperience() {
-  const scrollRef = useRef(null);
+  const scrollRef = useRef<HTMLDivElement | null>(null);
   const isHovered = useRef(false);
-  const animRef = useRef(null);
+  const animRef = useRef<HTMLDivElement | null>(null);
   const posRef = useRef(0);
 
   useEffect(() => {
@@ -210,7 +210,7 @@ function AutoScrollExperience() {
 }
 
 export default function PortfolioPastelOptimized() {
-  const containerRef = useRef(null);
+  const containerRef = useRef<HTMLDivElement | null>(null);
 
   const { scrollYProgress } = useScroll({
     target: containerRef,

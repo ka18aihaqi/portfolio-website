@@ -78,7 +78,7 @@ const words = ["ECOSYSTEM.", "EXPERIENCES.", "SOLUTIONS.", "INNOVATION."];
 function AutoScrollExperience() {
   const scrollRef = useRef<HTMLDivElement | null>(null);
   const isHovered = useRef(false);
-  const animRef = useRef<HTMLDivElement | null>(null);
+  const animRef = useRef<number | null>(null);
   const posRef = useRef(0);
 
   useEffect(() => {
@@ -224,7 +224,9 @@ export default function PortfolioPastelOptimized() {
 
   const [wordIndex, setWordIndex] = useState(0);
   const [time, setTime] = useState("");
-  const [particles, setParticles] = useState([]);
+  const [particles, setParticles] = useState<
+  { id: number; x: number; y: number; speed: number; size: number }[]
+  >([]);
 
   useEffect(() => {
     const wordInterval = setInterval(() => {
@@ -243,7 +245,7 @@ export default function PortfolioPastelOptimized() {
       );
     }, 1000);
 
-    const moveCursor = (e) => {
+    const moveCursor = (e: MouseEvent) => {
       cursorX.set(e.clientX - 250);
       cursorY.set(e.clientY - 250);
     };

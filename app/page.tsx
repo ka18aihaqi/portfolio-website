@@ -42,26 +42,38 @@ const marqueeProjects = [...projects, ...projects, ...projects, ...projects];
 
 const experiences = [
   { 
-    role: "Full-Stack Developer", 
+    role: "Web Developer", 
     comp: "PT. Eska Link", 
     year: "Feb 2026 - Present", 
     points: [
       "Optimize and ensure the reliability of business-critical Sales Force applications, directly supporting high-traffic, daily corporate sales operations.",
       "Diagnose and resolve complex system disruptions across multiple business modules, minimizing operational downtime and preventing revenue loss.",
       "Analyze evolving business requirements to strategize and implement system enhancements, improving overall workflow efficiency."
-    ]
+    ],
+    logo: "https://ui-avatars.com/api/?name=EL&background=ffe4e6&color=e11d48&rounded=true&bold=true" 
   },
   { 
-    role: "IT Programmer", 
+    role: "Web Developer / IT Programmer", 
     comp: "PT. Terakorp Indonesia", 
     year: "Oct 2025 - Dec 2025", 
     points: [
       "Spearheaded feature enhancements within the Hospital Information System (HIS), including advanced data filtering and reporting automation to support management oversight.",
       "Executed rapid troubleshooting and critical data corrections under pressure, ensuring seamless, uninterrupted daily healthcare operations."
-    ]
+    ],
+    logo: "https://ui-avatars.com/api/?name=TI&background=e0f2fe&color=0284c7&rounded=true&bold=true" 
+  },
+  { 
+    role: "Backend Intern", 
+    comp: "Human Centric Engineering", 
+    year: "Feb 2025 - May 2025", 
+    points: [
+      "Developed backend systems for an academic conference management platform and successfully optimized document archiving workflows."
+    ],
+    logo: "https://ui-avatars.com/api/?name=HC&background=dcfce3&color=16a34a&rounded=true&bold=true" 
   },
 ];
 
+const marqueeExperiences = [...experiences, ...experiences, ...experiences, ...experiences];
 const words = ["ECOSYSTEM.", "EXPERIENCES.", "SOLUTIONS.", "INNOVATION."];
 
 export default function PortfolioPastelOptimized() {
@@ -178,7 +190,7 @@ export default function PortfolioPastelOptimized() {
       >
         <div className="backdrop-blur-xl bg-white/60 border border-white/80 shadow-[0_8px_30px_rgb(0,0,0,0.04)] rounded-full px-8 py-4 flex items-center justify-between">
           <h1 className="font-bold tracking-tight text-xl text-slate-900">
-            Kahfi Albaihaqi<span className="text-rose-400">.</span>
+            Kahfi<span className="text-rose-400">.</span>
           </h1>
           <div className="hidden md:flex gap-8 text-xs font-bold tracking-widest uppercase text-slate-400">
             <a href="#about" className="hover:text-rose-400 transition-colors">About</a>
@@ -187,7 +199,7 @@ export default function PortfolioPastelOptimized() {
             <a href="#projects" className="hover:text-rose-400 transition-colors">Work</a>
           </div>
           <a href="#contact" className="text-xs font-bold text-white bg-slate-900 hover:bg-slate-800 hover:shadow-lg hover:-translate-y-0.5 px-5 py-2.5 rounded-full transition-all">
-            Let's Talk
+            Let&apos;s Talk
           </a>
         </div>
       </motion.nav>
@@ -257,8 +269,7 @@ export default function PortfolioPastelOptimized() {
             transition={{ duration: 0.8, delay: 0.3 }}
             className="text-lg md:text-xl text-slate-500 max-w-2xl leading-relaxed font-medium mt-6"
           >
-            I translate complex logic into seamless operational workflows. 
-            Bridging robust backend security with dynamic frontend reactivity.
+            I am Raden Muhammad Kahfi Albaihaqi Suwarto, an analytical and results-oriented professional with a strong foundation in logical problem-solving, system analysis, and process optimization. I specialize in translating complex technical data into actionable business insights and managing critical digital infrastructure.
           </motion.p>
         </motion.div>
       </section>
@@ -361,9 +372,15 @@ export default function PortfolioPastelOptimized() {
                 className="group bg-white/60 backdrop-blur-md border border-slate-200/60 rounded-[2rem] p-8 md:p-10 shadow-[0_4px_20px_rgb(0,0,0,0.03)] hover:shadow-[0_12px_40px_rgb(0,0,0,0.06)] hover:bg-white transition-all duration-300"
               >
                 <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
-                  <div>
-                    <h3 className="text-2xl font-bold text-slate-900 group-hover:text-rose-500 transition-colors">{exp.role}</h3>
-                    <p className="text-lg text-slate-600 font-medium">{exp.comp}</p>
+                  <div className="flex items-center gap-4">
+                    <div className="w-14 h-14 rounded-2xl overflow-hidden bg-white border border-slate-100 shadow-sm flex items-center justify-center p-1 flex-shrink-0 group-hover:scale-105 transition-transform duration-300">
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img src={exp.logo} alt={`${exp.comp} logo`} className="w-full h-full object-contain rounded-xl" />
+                    </div>
+                    <div>
+                      <h3 className="text-2xl font-bold text-slate-900 group-hover:text-rose-500 transition-colors">{exp.role}</h3>
+                      <p className="text-lg text-slate-600 font-medium">{exp.comp}</p>
+                    </div>
                   </div>
                   <div className="px-4 py-1.5 bg-slate-100 border border-slate-200 text-slate-600 rounded-full text-xs font-bold font-mono uppercase tracking-wider">
                     {exp.year}
@@ -446,7 +463,7 @@ export default function PortfolioPastelOptimized() {
           viewport={{ once: true }}
           className="text-5xl md:text-8xl font-black tracking-tighter text-slate-900 mb-8"
         >
-          LET'S <span className="italic font-serif font-light text-slate-400">talk.</span>
+          LET&apos;S <span className="italic font-serif font-light text-slate-400">talk.</span>
         </motion.h2>
         
         <motion.p 
@@ -456,7 +473,7 @@ export default function PortfolioPastelOptimized() {
           transition={{ delay: 0.2 }}
           className="text-slate-500 text-lg md:text-xl max-w-xl mb-12 font-medium"
         >
-          Open for engineering roles and collaborations. I'm ready to bring my analytical background to your next big system.
+          Open for engineering roles and collaborations. I&apos;m ready to bring my analytical background to your next big system.
         </motion.p>
 
         <motion.a
@@ -472,7 +489,7 @@ export default function PortfolioPastelOptimized() {
 
       {/* FOOTER */}
       <footer className="py-8 text-center text-slate-400 font-medium text-sm relative z-10 border-t border-slate-200/40">
-        <p>© {new Date().getFullYear()} Kahfi Albaihaqi. All rights reserved.</p>
+        <p>© {new Date().getFullYear()} Raden Muhammad Kahfi Albaihaqi Suwarto. All rights reserved.</p>
       </footer>
     </div>
   );
